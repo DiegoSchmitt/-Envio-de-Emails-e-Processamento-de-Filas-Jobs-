@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Attachment;
 
 class RegisterEmail extends Mailable
 {
@@ -38,6 +39,10 @@ class RegisterEmail extends Mailable
     public function content(): Content
     {
 
+        $this->subject('Assunto do Email');
+        $this->from('replay@email.com', 'Reply Bot');
+        $this->replyTo('diego77asms@gmail.com');
+
         $dados['nome'] = $this->user->name;
         $dados['idade'] = 35;
         return new Content(
@@ -52,7 +57,10 @@ class RegisterEmail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $fileName = realpath(__DIR__.'/../../public/boneco.png');
+        return [
+            Attachment::fromPath($fileName)->as('nono.png')
+        ];
     }
 }
 

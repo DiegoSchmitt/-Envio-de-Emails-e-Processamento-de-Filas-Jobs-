@@ -13,11 +13,11 @@ class AuthMailController extends Controller
     public function sendRegisterMail(){
         $user = new User();
         $user->name = 'Diego';
+        $user->password = '123';
+        $user->email = 'teste6@teste.com';
 
-        $registerEmail = new RegisterEmail($user);
+        $user->save();
 
-        //return $registerEmail;
-
-        Mail::to('diego_asms@hotmail.com')->send($registerEmail);
+        SendAuthMail::dispatch($user);
     }
 }
